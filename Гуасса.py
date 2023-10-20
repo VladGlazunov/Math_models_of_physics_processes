@@ -1,25 +1,34 @@
 import numpy as np
 
-hod = np.array([[1, 2, -1, -1, 0],
-                [2, 3, -1, 1, 3],
-                [2, 5, 2, 1, 3],
-                [3, 5, 1, 2, 5]])
+test1 = [[1, 2, -1, -1, 0],
+         [2, 3, -1, 1, 3],
+         [2, 5, 2, 1, 3],
+         [3, 5, 1, 2, 5]]
+
+test2 = [[0, 1, 1, 2, 2],
+         [1, 3, 2, -1, 2],
+         [2, -1, 5, 3, -1],
+         [4, 5, 4, -4, 8]]
+
+hod = np.array(test2)
 print(hod, end='\n\n')
 
 
 def Th_Gauss():  # сделать так, чтобы при нуле в начале ничего не ломалось
-    for i in range(0, 4):
-        for n in range(i + 1, 4):
-            y = hod[n][i].copy()
-            for m in range(i, 5):
-                hod[n][m] = hod[n][m] - (y / hod[i][i]) * hod[i][m]
+    for row_number in range(0, len(hod)):
+        if hod[row_number][row_number] == 0:
+            hod[row_number], hod[len(hod)] = hod[len(hod)], hod[row_number]
+        for next_row_number in range(row_number + 1, len(hod)):
+            k = hod[next_row_number][row_number] / hod[row_number][row_number]
+            for column_number in range(row_number, len(hod) + 1):
+                hod[next_row_number][column_number] = hod[next_row_number][column_number] - k * hod[row_number][column_number]
     print(hod)
 
-    xs = [-10000] * len(hod)
-    for x_number in range(len(hod) - 1, 0, -1):
+    xs = [0] * len(hod)
+    for x_number in range(len(hod) - 1, -1, -1):
         summa = 0
-        for j in range(len(hod) - 1, i, -1):
-            summa += xs[j] * hod[x_number][j]
+        for previous_x_number in range(len(hod) - 1, x_number, -1):
+            summa += xs[previous_x_number] * hod[x_number][previous_x_number]
         xs[x_number] = (hod[x_number][len(hod)] - summa) / hod[x_number][x_number]
         print(x_number, xs[x_number])
     return xs
