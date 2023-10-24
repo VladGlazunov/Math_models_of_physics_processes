@@ -1,8 +1,18 @@
 import math
+
+
 def A(k, n):
-    return math.factorial(n)/math.factorial(n-k)
+    return math.factorial(n) / math.factorial(n - k)
+
+
 def C(k, n):
-    return math.factorial(n)/(math.factorial(n-k) * math.factorial(k))
+    return math.factorial(n) / (math.factorial(n - k) * math.factorial(k))
 
 
-print((5/12)*(7/11)+(7/12)*(5/11))
+def Puasson(n, p, k):
+    answer = 0
+    h = n * p
+    for i in range(0, k + 1):
+        answer += math.exp(-h) * (h ** i) / math.factorial(i)
+    return answer
+r

@@ -10,11 +10,10 @@ test2 = [[4, 1, 1, 2, 2],
          [2, -1, 5, 3, -1],
          [4, 5, 4, -4, 8]]
 
-hod = np.array(test2)
-print(hod, end='\n\n')
 
 
-def Th_Gauss():  # сделать так, чтобы при нуле в начале ничего не ломалось
+def Th_Gauss(matrix):  # сделать так, чтобы при нуле в начале ничего не ломалось
+    hod = np.array(matrix)
     n = len(hod)
     for row_number in range(0, n):
         if hod[row_number][row_number] == 0:
@@ -43,4 +42,4 @@ def Th_Gauss():  # сделать так, чтобы при нуле в нача
 
 
 
-print(Th_Gauss())
+print(Th_Gauss(test2))

@@ -3,34 +3,67 @@ import numpy as np
 
 
 def f1(x, y):
-    return x ** 2 + x - y ** 2 + 0.15
+    return math.cos(x - 1) + y - 0.5
 
 
 def f2(x, y):
-    return x ** 2 - y + y ** 2 + 0.17
+    return x - math.cos(y) - 3
 
 
-e = 0.001
-x, y = 0.15, 0.17
-test_1_Ya = [[2 * x + 1, -2 * y],
-             [2 * x, -1 + 2 * y]]
-test_2_Ya = [[-math.sin(x - 1), 1], [1, math.cos(y)]]
-Yakobi = np.array(test_1_Ya)
+def Th_Gauss(matrix):  # сделать так, чтобы при нуле в начале ничего не ломалось
+    hod = np.array(matrix)
+    n = len(hod)
+    for row_number in range(0, n):
+        if hod[row_number][row_number] == 0:
+            row_to_exchange = -10
+            for a_a in range(row_number + 1, n):
+                if hod[a_a, row_number] != 0:
+                    row_to_exchange = a_a
+                    break
+            if row_to_exchange == -10:
+                raise Exception("слишком много решений")
+            hod[row_number], hod[row_to_exchange] = hod[row_to_exchange], hod[row_number].copy()
+        for next_row_number in range(row_number + 1, n):
+            k = hod[next_row_number][row_number] / hod[row_number][row_number]
+            for column_number in range(row_number, n + 1):
+                hod[next_row_number][column_number] = hod[next_row_number][column_number] - k * hod[row_number][
+                    column_number]
+    xs = [0] * n
+    for x_number in range(n - 1, -1, -1):
+        summa = 0
+        for previous_x_number in range(n - 1, x_number, -1):
+            summa += xs[previous_x_number] * hod[x_number][previous_x_number]
+        xs[x_number] = (hod[x_number][n] - summa) / hod[x_number][x_number]
+    return xs
 
 
 def Newton():
+    iteracia = []
     x_k, y_k = x, y
     while True:
-        det_Yakobi = Yakobi[0][0] * Yakobi[1][1] - Yakobi[0][1] * Yakobi[1][0]
-        matrix_F = np.array([[f1(x, y)], [f2(x, y)]], )
-        if det_Yakobi == 0:
-            raise Exception('Метод не работает. Определитель равен нулю')
-        Yakobi[0][0], Yakobi[1][1] = Yakobi[1][1], Yakobi[0][0].copy()
-        Yakobi[0][1], Yakobi[1][0] = (-1) * Yakobi[1][0], (-1) * Yakobi[0][0].copy()
-        delta_values = (1 / det_Yakobi) * Yakobi.dot(matrix_F)
-        x_k = x + delta_values[0][0]
-        y_k = y + delta_values[1][0]
-        if max(abs(delta_values[0][0]), abs(delta_values[1][0])) < e:
+        iteracia.append(1)
+        matrix = []
+        for row_number in range(0, len(Yakobi)):
+            row = []
+            matrix.append(row)
+            for column_number in range(0, len(Yakobi[0])):
+                matrix[row_number].append(Yakobi[row_number][column_number])
+            if row_number == 0:  # пофиксить на предмет перебора функций
+                matrix[row_number].append(-f1(x_k, y_k))
+            elif row_number == 1:
+                matrix[row_number].append(-f2(x_k, y_k))
+        delta_answers = Th_Gauss(matrix)
+        x_k, y_k = x_k + delta_answers[0], y_k + delta_answers[1]
+        if max(abs(delta_answers[0]), abs(delta_answers[1])) < e:
             break
-    return [x_k, y_k]
+    return [x_k, y_k], len(iteracia)
+
+
+e = 0.001
+x, y = 1, 1
+test_1_Ya = [[2 * x + 1, -2 * y],
+             [2 * x, -1 + 2 * y]]
+test_2_Ya = [[-math.sin(x - 1), 1], [1, math.cos(y)]]
+Yakobi = np.array(test_2_Ya)
+
 print(Newton())
