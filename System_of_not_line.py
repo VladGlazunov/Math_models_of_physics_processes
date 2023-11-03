@@ -48,10 +48,7 @@ def Newton():
             matrix.append(row)
             for column_number in range(0, len(Yakobi[0])):
                 matrix[row_number].append(Yakobi[row_number][column_number])
-            if row_number == 0:  # пофиксить на предмет перебора функций
-                matrix[row_number].append(-f1(x_k, y_k))
-            elif row_number == 1:
-                matrix[row_number].append(-f2(x_k, y_k))
+            matrix[row_number].append(fun_mat[row_number](x_k, y_k))
         delta_answers = Th_Gauss(matrix)
         x_k, y_k = x_k + delta_answers[0], y_k + delta_answers[1]
         if max(abs(delta_answers[0]), abs(delta_answers[1])) < fault:
@@ -67,7 +64,7 @@ test_2_Ya = [[-math.sin(x - 1), 1],
              [1, math.cos(y)]]
 Yakobi = np.array(test_2_Ya)
 
-fun_mat = [f1(), f2()]
+fun_mat = [f1, f2]
 
 for number_value in range(0, len(Newton())):
     if number_value == len(Newton()) - 1:
