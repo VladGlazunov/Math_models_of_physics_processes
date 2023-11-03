@@ -48,7 +48,7 @@ def Newton():
             matrix.append(row)
             for column_number in range(0, len(Yakobi[0])):
                 matrix[row_number].append(Yakobi[row_number][column_number])
-            matrix[row_number].append(fun_mat[row_number](x_k, y_k))
+            matrix[row_number].append(-fun_mat[row_number](x_k, y_k))
         delta_answers = Th_Gauss(matrix)
         x_k, y_k = x_k + delta_answers[0], y_k + delta_answers[1]
         if max(abs(delta_answers[0]), abs(delta_answers[1])) < fault:
