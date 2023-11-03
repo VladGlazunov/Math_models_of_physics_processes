@@ -10,7 +10,7 @@ def f2(x, y):
     return x - math.cos(y) - 3
 
 
-def Th_Gauss(matrix):  # сделать так, чтобы при нуле в начале ничего не ломалось
+def Th_Gauss(matrix):
     hod = np.array(matrix)
     n = len(hod)
     for row_number in range(0, n):
@@ -54,16 +54,23 @@ def Newton():
                 matrix[row_number].append(-f2(x_k, y_k))
         delta_answers = Th_Gauss(matrix)
         x_k, y_k = x_k + delta_answers[0], y_k + delta_answers[1]
-        if max(abs(delta_answers[0]), abs(delta_answers[1])) < e:
+        if max(abs(delta_answers[0]), abs(delta_answers[1])) < fault:
             break
-    return [x_k, y_k], len(iteracia)
+    return [x_k, y_k, len(iteracia)]
 
 
-e = 0.001
+fault = 0.001
 x, y = 1, 1
 test_1_Ya = [[2 * x + 1, -2 * y],
              [2 * x, -1 + 2 * y]]
-test_2_Ya = [[-math.sin(x - 1), 1], [1, math.cos(y)]]
+test_2_Ya = [[-math.sin(x - 1), 1],
+             [1, math.cos(y)]]
 Yakobi = np.array(test_2_Ya)
 
-print(Newton())
+fun_mat = [f1(), f2()]
+
+for number_value in range(0, len(Newton())):
+    if number_value == len(Newton()) - 1:
+        print("Число итераций:", Newton()[number_value])
+    else:
+        print("{0} Корень системы уравнений:".format(number_value + 1), Newton()[number_value])
