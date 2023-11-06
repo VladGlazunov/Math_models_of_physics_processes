@@ -66,8 +66,9 @@ Yakobi = np.array(test_2_Ya)
 
 fun_mat = [f1, f2]
 
-for number_value in range(0, len(Newton())):
-    if number_value == len(Newton()) - 1:
-        print("Число итераций:", Newton()[number_value])
+answer = Newton()
+for number_value in range(0, len(answer)):
+    if number_value == len(answer) - 1:
+        print("Число итераций:", answer[number_value])
     else:
-        print("{0} Корень системы уравнений:".format(number_value + 1), Newton()[number_value])
+        print("{0} Корень системы уравнений:".format(number_value + 1), answer[number_value])

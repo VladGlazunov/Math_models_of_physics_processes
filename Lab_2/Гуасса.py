@@ -11,7 +11,6 @@ test2 = [[4, 1, 1, 2, 2],
          [4, 5, 4, -4, 8]]
 
 
-
 def Th_Gauss(matrix):  # сделать так, чтобы при нуле в начале ничего не ломалось
     hod = np.array(matrix)
     n = len(hod)
@@ -28,8 +27,8 @@ def Th_Gauss(matrix):  # сделать так, чтобы при нуле в н
         for next_row_number in range(row_number + 1, n):
             k = hod[next_row_number][row_number] / hod[row_number][row_number]
             for column_number in range(row_number, n + 1):
-                hod[next_row_number][column_number] = hod[next_row_number][column_number] - k * hod[row_number][column_number]
-    print(hod)
+                hod[next_row_number][column_number] = hod[next_row_number][column_number] - k * hod[row_number][
+                    column_number]
 
     xs = [0] * n
     for x_number in range(n - 1, -1, -1):
@@ -37,9 +36,7 @@ def Th_Gauss(matrix):  # сделать так, чтобы при нуле в н
         for previous_x_number in range(n - 1, x_number, -1):
             summa += xs[previous_x_number] * hod[x_number][previous_x_number]
         xs[x_number] = (hod[x_number][n] - summa) / hod[x_number][x_number]
-        print(x_number, xs[x_number])
     return xs
 
 
-
-print(Th_Gauss(test2))
+print(Th_Gauss(test1))
