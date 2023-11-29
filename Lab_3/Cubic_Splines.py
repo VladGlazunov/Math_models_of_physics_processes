@@ -38,7 +38,7 @@ def Creat_Interpolation_Matrix(lst):
     x_values = lst[0]
     y_values = lst[1]
     interval_count = len(x_values) - 1
-    interpolation_matrix = [] #пустая матрица для вычисления коэффициентов
+    interpolation_matrix = [] # пустая матрица для вычисления коэффициентов
     for row_number in range(0, interval_count * 4):
         row = []
         for column_number in range(0, interval_count * 4 + 1):
