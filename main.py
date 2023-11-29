@@ -15,4 +15,14 @@ def Puasson(n, p, k):
     for i in range(0, k + 1):
         answer += math.exp(-h) * (h ** i) / math.factorial(i)
     return answer
-r
+
+
+# v = 0
+# for i in range(0, 9):
+#     a = 1 - math.exp(-4.9 * i)
+#     v += a
+#     print(i, round(a, 4))
+#     print(v, end='\n\n')
+a = (C(1, 3)/C(1, 5) * C(1, 3)/C(1, 8) +
+        C(1, 2)/C(1, 5) * C(1, 5)/C(1, 8)) * 0.5 + C(1, 3)/C(1, 5) * C(1, 5)/C(1, 8)
+print(a)
