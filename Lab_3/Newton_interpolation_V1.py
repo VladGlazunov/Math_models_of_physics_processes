@@ -1,5 +1,5 @@
 import math
-
+import functools
 
 def SINUS(x):
     return math.sin(x)
@@ -31,6 +31,7 @@ def polinom_function(b):
     return answer
 
 
+@functools.lru_cache(maxsize=None)
 def Recurcia(b, gauss):
     if gauss == 0:
         return b - start_list[0][gauss]
