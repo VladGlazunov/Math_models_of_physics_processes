@@ -6,7 +6,7 @@ def F1(a, b, c, d, x):
     return a * x ** 3 + b * x ** 2 + c * x + d
 
 
-def Th_Gauss(matrix):  # сделать так, чтобы при нуле в начале ничего не ломалось
+def Th_Gauss(matrix):
     hod = np.array(matrix)
     n = len(hod)
     for row_number in range(0, n):
@@ -116,6 +116,29 @@ def Interpolation_Coeff(lst, x):
     return final_value
 
 
+def first_derivative_1(x, h, lst):
+    f_main = Interpolation_Coeff(lst, x)
+    f0 = Interpolation_Coeff(lst, x - h)
+    f2 = Interpolation_Coeff(lst, x + h)
+    if x >= lst[0][len(lst[0]) - 1] - lst[0][0]:
+        return (f_main - f0) / h
+    else:
+        return (f2 - f_main) / h
+
+
+def first_derivative_2(x, h, lst):
+    f0 = Interpolation_Coeff(lst, x - 2 * h)
+    f1 = Interpolation_Coeff(lst, x - h)
+    f_main = Interpolation_Coeff(lst, x)
+    f3 = Interpolation_Coeff(lst, x + h)
+    f4 = Interpolation_Coeff(lst, x + 2 * h)
+    if x >= lst[0][len(lst[0]) - 1] - lst[0][0]:
+        return (3 * f_main - 4 * f1 + f0) / (2 * h)
+    else:
+        return (- f4 + 4 * f3 - 3 * f_main) / (2 * h)
+
+
 start_list_1 = [[1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5],
                 [0.84, 1.00, 0.91, 0.6, 0.14, -0.35, -0.76, -0.98, -0.96, -0.71]]
-print(Interpolation_Coeff(start_list_1,  1))
+print(first_derivative_1(5, 0.05, start_list_1))
+print(first_derivative_2(5, 0.25, start_list_1))
